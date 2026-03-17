@@ -1,13 +1,11 @@
 # importing flask 
 from flask import*
 # importing pymysql
-import pymysql 
-from flask_cors import CORS
+import pymysql
 # importing cursors from pymysql 
 import pymysql.cursors
 # initializing the flask app 
 app = Flask(__name__)
-CORS(app)
 # importing os so as to get the directory to the add_products upload photo session
 import os
 UPLOAD_FOLDER = 'static/images'
@@ -23,7 +21,7 @@ def signup():
     email = request.form['email']
     phone = request.form['phone']
     # Connecting to the database
-    connection = pymysql.connect(user='mosestruham', host='mysql-mosestruham.alwaysdata.net', password='modcom1234',database='mosestruham_truhamsokogarden')
+    connection = pymysql.connect(user='root', host='localhost', password='', database='truhamsokogarden')
     # defining the cursor for sql execution 
     cursor = connection.cursor()
     # sql query to add users into the database
@@ -44,7 +42,7 @@ def signin():
     email = request.form['email']
     password = request.form['password']
     # create a connection to the database
-    connection = pymysql.connect(user='mosestruham', host='mysql-mosestruham.alwaysdata.net', password='modcom1234',database='mosestruham_truhamsokogarden')
+    connection = pymysql.connect(user='root', host='localhost', password='',database='truhamsokogarden')
     # defining the cursor, we are using the DictCursor 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     # creating the sql query 
@@ -83,7 +81,7 @@ def add_products ():
     photo.save(photo_path)
 
     # connecting to the database
-    connection = pymysql.connect(user='mosestruham', host='mysql-mosestruham.alwaysdata.net', password='modcom1234',database='mosestruham_truhamsokogarden')
+    connection = pymysql.connect(user= 'root', host= 'localhost', password= '', database= 'truhamsokogarden')
     # defining the cursor
     cursor = connection.cursor()
     # create the sql query
@@ -94,7 +92,7 @@ def add_products ():
     cursor.execute(sql,data)
     # commiting changes to the database
     connection.commit()
-    connection.close()
+    connection.close
     # return a response
     return jsonify ({"Message" : "Product details added successfully"})
 
@@ -102,7 +100,7 @@ def add_products ():
 @app.route("/api/get_products_details")
 def get_products_details():
     # creating a connection to the database
-    connection = pymysql.connect(user='mosestruham', host='mysql-mosestruham.alwaysdata.net', password='modcom1234',database='mosestruham_truhamsokogarden')
+    connection = pymysql.connect(user='root', host='localhost', password='',database='truhamsokogarden')
     # defining the cursor to execute the SQL query
     cursor = connection.cursor(pymysql.cursors.DictCursor)
     # creating the sql query
@@ -171,4 +169,4 @@ def mpesa_payment():
         print(response.text)
         return jsonify({"message": "Please Complete Payment in Your Phone and we will deliver in minutes"})
 # run the app 
-# app.run(debug=True)
+app.run(debug=True)
